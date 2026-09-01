@@ -10,23 +10,21 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Apply session update for API routes that need authentication
-  if (request.nextUrl.pathname.startsWith('/api/timetable')) {
+  // Skip middleware for public routes
+  if (
+    request.nextUrl.pathname === '/' ||
+    request.nextUrl.pathname === '/landing' ||
+    request.nextUrl.pathname === '/auth'
+  ) {
+    return NextResponse.next()
+  }
+
+  // Update session for authenticated routes safely
+  try {
     return await updateSession(request)
-  }
-
-  // Skip middleware for auth page
-  if (request.nextUrl.pathname === '/auth') {
+  } catch (error) {
     return NextResponse.next()
   }
-
-  // Skip middleware for home page
-  if (request.nextUrl.pathname === '/') {
-    return NextResponse.next()
-  }
-
-  // Update session for authenticated routes
-  return await updateSession(request)
 }
 
 export const config = {
@@ -37,7 +35,8 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - auth (auth page)
+     * - landing (landing page)
      */
-    '/((?!_next/static|_next/image|favicon.ico|auth).*)',
+    '/((?!_next/static|_next/image|favicon.ico|auth|landing).*)',
   ],
 }

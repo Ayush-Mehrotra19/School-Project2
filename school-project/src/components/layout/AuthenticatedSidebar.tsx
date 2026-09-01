@@ -28,9 +28,25 @@ export function AuthenticatedSidebar({ activeItem = 'dashboard' }: Authenticated
             avatar_url: session.user.user_metadata?.avatar_url || null
           };
           setUser(userData);
+        } else if (typeof window !== 'undefined' && localStorage.getItem('growmyiq_user')) {
+          const savedUser = JSON.parse(localStorage.getItem('growmyiq_user')!);
+          setUser({
+            name: savedUser.name || 'Student',
+            handle: savedUser.handle || '@student',
+            email: savedUser.email || '',
+            avatar_url: null
+          });
         }
       } catch (error) {
-        console.error('Error fetching user:', error);
+        if (typeof window !== 'undefined' && localStorage.getItem('growmyiq_user')) {
+          const savedUser = JSON.parse(localStorage.getItem('growmyiq_user')!);
+          setUser({
+            name: savedUser.name || 'Student',
+            handle: savedUser.handle || '@student',
+            email: savedUser.email || '',
+            avatar_url: null
+          });
+        }
       } finally {
         setIsLoading(false);
       }
@@ -50,6 +66,9 @@ export function AuthenticatedSidebar({ activeItem = 'dashboard' }: Authenticated
           };
           setUser(userData);
         } else if (event === 'SIGNED_OUT') {
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('growmyiq_user');
+          }
           setUser(null);
         }
       }
@@ -60,11 +79,16 @@ export function AuthenticatedSidebar({ activeItem = 'dashboard' }: Authenticated
 
   const handleLogout = async () => {
     try {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('growmyiq_user');
+      }
       await supabase.auth.signOut();
-      // The auth state change listener will handle the redirect
       window.location.href = '/auth';
     } catch (error) {
-      console.error('Error signing out:', error);
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('growmyiq_user');
+      }
+      window.location.href = '/auth';
     }
   };
 
@@ -135,10 +159,10 @@ export function AuthenticatedSidebar({ activeItem = 'dashboard' }: Authenticated
       {/* App Logo/Header */}
       <div className="mb-8 pb-4 border-b border-gray-700">
         <h1 className="sidebar-logo">
-          <svg className="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-6 h-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944v0A11.955 11.955 0 014.382 8.984M9 16l3-3m0 0l3 3m0-3h3M9 12h3" />
           </svg>
-          LearnDash
+          GrowMyIq
         </h1>
         {user && (
           <div className="mt-3">

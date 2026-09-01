@@ -125,7 +125,7 @@ export default function QuizzerPage() {
 
   return (
     <AuthGuard>
-      <div className="qz-root">
+      <div className="qz-root" suppressHydrationWarning>
         <div className="qz-backdrop-glow glow-1" />
         <div className="qz-backdrop-glow glow-2" />
 

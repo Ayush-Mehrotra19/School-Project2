@@ -10,26 +10,32 @@ interface AuthGuardProps {
 }
 
 export function AuthGuard({ children, fallback }: AuthGuardProps) {
+  const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {
+    setIsMounted(true);
+
     const checkAuth = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
 
-        if (session) {
+        if (session || (typeof window !== 'undefined' && localStorage.getItem('growmyiq_user'))) {
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
           router.push('/auth');
         }
       } catch (error) {
-        console.error('Auth check error:', error);
-        setIsAuthenticated(false);
-        router.push('/auth');
+        if (typeof window !== 'undefined' && localStorage.getItem('growmyiq_user')) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+          router.push('/auth');
+        }
       } finally {
         setIsLoading(false);
       }
@@ -53,10 +59,10 @@ export function AuthGuard({ children, fallback }: AuthGuardProps) {
     return () => subscription.unsubscribe();
   }, [router, supabase.auth]);
 
-  if (isLoading) {
-    return fallback || (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+  if (!isMounted || isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen" suppressHydrationWarning>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" suppressHydrationWarning></div>
       </div>
     );
   }

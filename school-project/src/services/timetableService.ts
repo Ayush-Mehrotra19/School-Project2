@@ -581,7 +581,7 @@ class TimetableService {
       'sunday': 7
     };
 
-    let ical = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//LearnDash//Timetable//EN\n';
+    let ical = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//GrowMyIq//Timetable//EN\n';
 
     // Add events for each day
     days.forEach(day => {

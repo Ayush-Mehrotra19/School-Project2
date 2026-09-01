@@ -1,4 +1,4 @@
-# LearnDash - Learning Management System
+# GrowMyIq - Learning Management System
 
 <div align="center">
   <img src="https://img.shields.io/badge/Next.js-15.5.4-black?style=for-the-badge&logo=next.js" alt="Next.js">
@@ -26,7 +26,7 @@
 
 ## 🌟 Overview
 
-LearnDash is a modern, AI-powered learning management system built with Next.js 15 and TypeScript. It features a beautiful glassmorphism design with a cosmic theme, comprehensive quiz management, AI-integrated timetable generation, and real-time progress tracking.
+GrowMyIq is a modern, AI-powered learning management system built with Next.js 15 and TypeScript. It features a beautiful glassmorphism design with a cosmic theme, comprehensive quiz management, AI-integrated timetable generation, and real-time progress tracking.
 
 The platform is designed to provide an engaging learning experience with features such as:
 - AI-generated quizzes with detailed explanations
@@ -423,5 +423,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 <div align="center">
-  Made with ❤️ by the LearnDash team
+  Made with ❤️ by the GrowMyIq team
 </div>

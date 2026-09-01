@@ -422,8 +422,8 @@ function QuizContent() {
   // Active Quiz View
   return (
     <AuthGuard>
-      <div className="quiz-shell">
-        <div className="quiz-main-container">
+      <div className="quiz-shell" suppressHydrationWarning>
+        <div className="quiz-main-container" suppressHydrationWarning>
           {/* Top Bar: Subject, Timer, Progress */}
           <header className="quiz-topbar">
             <div>

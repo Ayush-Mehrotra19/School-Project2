@@ -447,7 +447,7 @@ export default function TimetablePage() {
 
   return (
     <AuthGuard>
-      <div className="tt-root">
+      <div className="tt-root" suppressHydrationWarning>
         <div className="tt-orb tt-orb-1" />
         <div className="tt-orb tt-orb-2" />
 

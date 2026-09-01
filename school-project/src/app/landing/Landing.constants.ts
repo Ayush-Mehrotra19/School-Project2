@@ -13,7 +13,7 @@ export const NAVIGATION_LINKS: FooterLink[] = [
   { label: 'Features', href: '#features' },
 ];
 
-export const HERO_TITLE = 'Learning. Re-invented.';
+export const HERO_TITLE = 'Learning, Re invented';
 export const HERO_DESCRIPTION =
   'Revolutionising learning with artificial intelligence, GrowMyIQ is the best way to learn in the 21st century.';
 export const HERO_CTA = 'Get Started Now';
@@ -153,7 +153,7 @@ export const FAQS: FAQItem[] = [
   },
 ];
 
-export const CTA_TITLE = 'Grow Now with LanX';
+export const CTA_TITLE = 'Grow Now with GrowMyIQ';
 export const CTA_DESCRIPTION =
   'Unlock the power of data to drive smarter decisions and faster growth with our platform.';
 export const CTA_PRIMARY = 'Get Started Now';

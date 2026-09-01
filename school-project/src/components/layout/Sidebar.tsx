@@ -60,10 +60,10 @@ export function Sidebar({ activeItem = 'dashboard', user = { name: 'User', handl
       {/* App Logo/Header */}
       <div className="mb-8 pb-4 border-b border-gray-700">
         <h1 className="sidebar-logo">
-          <svg className="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-6 h-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944v0A11.955 11.955 0 014.382 8.984M9 16l3-3m0 0l3 3m0-3h3M9 12h3" />
           </svg>
-          LearnDash
+          GrowMyIq
         </h1>
         <p className="sidebar-user-handle">{user.handle}</p>
       </div>

@@ -41,6 +41,7 @@ export default function Dashboard() {
   const supabase = createClient();
 
   const [userName, setUserName] = useState<string>('Scholar');
+  const [todayDate, setTodayDate] = useState<string>('Today');
   const [selectedGrade, setSelectedGrade] = useState<number>(10);
   const [stats, setStats] = useState<UserOverviewStats>({
     totalQuizzes: 0,
@@ -50,8 +51,16 @@ export default function Dashboard() {
   });
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load user session & real stats from Supabase
+  // Load user session & real stats from Supabase / localStorage
   useEffect(() => {
+    setTodayDate(
+      new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric'
+      })
+    );
+
     async function loadDashboardData() {
       try {
         const { data: { session } } = await supabase.auth.getSession();
@@ -94,9 +103,15 @@ export default function Dashboard() {
               }))
             });
           }
+        } else if (typeof window !== 'undefined' && localStorage.getItem('growmyiq_user')) {
+          const saved = JSON.parse(localStorage.getItem('growmyiq_user')!);
+          if (saved.name) setUserName(saved.name);
         }
       } catch (err) {
-        console.error('Error fetching dashboard data:', err);
+        if (typeof window !== 'undefined' && localStorage.getItem('growmyiq_user')) {
+          const saved = JSON.parse(localStorage.getItem('growmyiq_user')!);
+          if (saved.name) setUserName(saved.name);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -121,14 +136,8 @@ export default function Dashboard() {
     router.push(`/quiz?quizData=${encoded}`);
   };
 
-  const todayDate = new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'short',
-    day: 'numeric'
-  });
-
   return (
-    <main className="db-root">
+    <main className="db-root" suppressHydrationWarning>
       {/* Ambient background glow */}
       <div className="db-orb db-orb-1" />
       <div className="db-orb db-orb-2" />
